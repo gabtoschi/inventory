@@ -1,1 +1,73 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+@import "../node_modules/bootstrap/scss/navbar";
+
+$theme-colors: (
+    "inventory": $orange
+);
+
+// navbar with orange links and text
+$navbar-inventory-color:                 rgba($orange, .5) !default;
+$navbar-inventory-hover-color:           rgba($orange, .75) !default;
+$navbar-inventory-active-color:          $orange !default;
+$navbar-inventory-disabled-color:        rgba($orange, .25) !default;
+$navbar-inventory-toggler-icon-bg:       str-replace(url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='#{$navbar-inventory-color}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"), "#", "%23") !default;
+$navbar-inventory-toggler-border-color:  rgba($orange, .1) !default;
+
+$navbar-inventory-brand-color:                 $navbar-inventory-active-color !default;
+$navbar-inventory-brand-hover-color:           $navbar-inventory-active-color !default;
+
+.navbar-inventory {
+    .navbar-brand {
+      color: $navbar-inventory-brand-color;
+  
+      @include hover-focus {
+        color: $navbar-inventory-brand-hover-color;
+      }
+    }
+  
+    .navbar-nav {
+      .nav-link {
+        color: $navbar-inventory-color;
+  
+        @include hover-focus {
+          color: $navbar-inventory-hover-color;
+        }
+  
+        &.disabled {
+          color: $navbar-inventory-disabled-color;
+        }
+      }
+  
+      .show > .nav-link,
+      .active > .nav-link,
+      .nav-link.show,
+      .nav-link.active {
+        color: $navbar-inventory-active-color;
+      }
+    }
+  
+    .navbar-toggler {
+      color: $navbar-inventory-color;
+      border-color: $navbar-inventory-toggler-border-color;
+    }
+  
+    .navbar-toggler-icon {
+      background-image: $navbar-inventory-toggler-icon-bg;
+    }
+  
+    .navbar-text {
+      color: $navbar-inventory-color;
+      a {
+        color: $navbar-inventory-active-color;
+  
+        @include hover-focus {
+          color: $navbar-inventory-active-color;
+        }
+      }
+    }
+  }
+
+@import "../node_modules/bootstrap/scss/bootstrap";
