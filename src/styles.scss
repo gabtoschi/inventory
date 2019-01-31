@@ -8,11 +8,13 @@
 $inventoryDefaultColor: $purple;
 $inventoryDarkColor: darken($inventoryDefaultColor, 20);
 $inventoryDarkestColor: darken($inventoryDefaultColor, 40);
+$inventoryLightColor: lighten($inventoryDefaultColor, 20);
 
 $theme-colors: (
     "inventory": $inventoryDefaultColor,
     "inventory-dark": $inventoryDarkColor,
-    "inventory-darkest": $inventoryDarkestColor
+    "inventory-darkest": $inventoryDarkestColor,
+    "inventory-light": $inventoryLightColor
 );
 
 // Footer
