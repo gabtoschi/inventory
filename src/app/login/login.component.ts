@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { LoginData } from './../shared/models/login-data';
+import { FormValidationService } from './../shared/services/form-validation.service';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +17,16 @@ export class LoginComponent implements OnInit {
   }
 
   submitLogin(form){
-    
+    console.log(this.loginData);
   }
 
-  constructor() { }
+  updateValidationCSS(field: FormControl){
+    return this.validation.updateValidationCSS(field);
+  }
+
+  constructor(
+    private validation: FormValidationService
+  ) { }
 
   ngOnInit() {
   }
