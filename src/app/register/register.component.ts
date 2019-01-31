@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, NgModel } from '@angular/forms';
 
 import { NewUserData } from '../shared/models/new-user-data';
-
+import { FormValidationService } from './../shared/services/form-validation.service';
 
 @Component({
   selector: 'app-register',
@@ -28,32 +28,20 @@ export class RegisterComponent implements OnInit {
     console.log(this.passwordConfirm);
   }
 
-  // checks if a field is invalid after touching it
-  isFieldInvalid(field: FormControl){
-    return field.touched && field.invalid;
-  }
-
-  // checks if a field is invalid after touching it
-  isFieldValid(field: FormControl){
-    return field.touched && field.valid;
-  }
-
   // updates valid and invalid Bootstrap classes
   updateValidationCSS(field: FormControl){
-    return {
-      'is-invalid': this.isFieldInvalid(field),
-      'is-valid': this.isFieldValid(field),
-    }
+    return this.validation.updateValidationCSS(field);
   }
 
   // clear password confirmation when a new password entered
   clearPasswordConf(passwordConfField: NgModel){
-    console.log(passwordConfField);
     passwordConfField.control.markAsUntouched();
     this.passwordConfirm = null;
   }
 
-  constructor() { }
+  constructor(
+    private validation: FormValidationService
+  ) { }
 
   ngOnInit() {
   }
