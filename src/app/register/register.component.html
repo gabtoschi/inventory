@@ -7,23 +7,51 @@
       </div>
       <div class="card-body">
 
-        <form>
+        <form #f="ngForm" (ngSubmit)="confirmRegister(f)">
           <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Player">
+              <input type="text" class="form-control" id="name" placeholder="Player"
+                [(ngModel)]="newUser.name" name="name" required #fName="ngModel"
+                [ngClass]="updateValidationCSS(fName)">
+              <div class="invalid-feedback">
+                Name is required.
+              </div>
           </div>
+
           <div class="form-group">
             <label for="email">E-mail</label>
-            <input type="text" class="form-control" id="email" placeholder="player@inventory.com">
+            <input type="text" class="form-control" id="email" placeholder="player@inventory.com"
+              [(ngModel)]="newUser.email" name="email" required email #fEmail="ngModel"
+              [ngClass]="updateValidationCSS(fEmail)">
+            <div *ngIf="fEmail.errors?.email" class="invalid-feedback">
+              Please insert a valid e-mail address.
+            </div>
+            <div *ngIf="!fEmail.errors?.email" class="invalid-feedback">
+              E-mail is required.
+            </div>
           </div>
+
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="password">
+            <input type="password" class="form-control" id="password" placeholder="password"
+              [(ngModel)]="newUser.password" name="password" required #fPassword="ngModel"
+              [ngClass]="updateValidationCSS(fPassword)"
+              (blur)="clearPasswordConf(fPasswordConf)">
+            <div class="invalid-feedback">
+              Password is required.
+            </div>
           </div>
+
           <div class="form-group">
             <label for="password-conf">Repeat the password</label>
-            <input type="password" class="form-control" id="password-conf" placeholder="password">
+            <input type="password" class="form-control" id="password-conf" placeholder="password"
+              [(ngModel)]="passwordConfirm" name="password-conf" required [stringMatch]="fPassword.value"
+              #fPasswordConf="ngModel" [ngClass]="updateValidationCSS(fPasswordConf)">
+            <div class="invalid-feedback">
+              The passwords aren't the same.
+            </div>
           </div>
+
           <button type="submit" class="btn btn-inventory-dark">Register</button>
         </form>
 

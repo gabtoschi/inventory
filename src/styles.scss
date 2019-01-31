@@ -18,7 +18,6 @@ $theme-colors: (
 );
 
 // Footer
-
 $footerHeight: 60px;
 
 html {
@@ -31,7 +30,7 @@ body {
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: $footerHeight;
