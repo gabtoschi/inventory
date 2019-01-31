@@ -4,10 +4,37 @@
 
 @import "../node_modules/bootstrap/scss/navbar";
 
+// Site Colors
 $inventoryDefaultColor: $purple;
+$inventoryDarkColor: darken($inventoryDefaultColor, 20);
+$inventoryDarkestColor: darken($inventoryDefaultColor, 40);
 
 $theme-colors: (
-    "inventory": $inventoryDefaultColor
+    "inventory": $inventoryDefaultColor,
+    "inventory-dark": $inventoryDarkColor,
+    "inventory-darkest": $inventoryDarkestColor
 );
+
+// Footer
+
+$footerHeight: 60px;
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: $footerHeight;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footerHeight;
+  line-height: $footerHeight;
+  background-color: $inventoryDarkColor;
+}
 
 @import "../node_modules/bootstrap/scss/bootstrap";
