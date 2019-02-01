@@ -1,3 +1,4 @@
+import { AuthGuard } from './../guards/auth.guard';
 import { Injectable } from '@angular/core';
 
 import { NewUserData } from '../models/new-user-data';
@@ -13,6 +14,9 @@ export class AuthService {
     {name: 'PH', email: 'a@a', password: '12'}
   ];
   _currentUser: NewUserData = null;
+  
+  // reference for auth guard
+  static isLoggedIn: boolean = false;
 
   // confirm a user registration
   registerUser(newUser: NewUserData){
@@ -53,6 +57,7 @@ export class AuthService {
       }
     });
 
+    AuthService.isLoggedIn = userRegistered;
     return userRegistered ? null : "E-mail or password wrong.";
   }
 

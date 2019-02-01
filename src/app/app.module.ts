@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AlertModule } from 'ngx-bootstrap';
+import { ButtonsModule } from 'ngx-bootstrap';
 
 import { StringMatchValidatorDirective } from './shared/directives/string-match-validator.directive';
 
@@ -31,7 +32,8 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    ButtonsModule.forRoot()
   ],
   providers: [
     FormValidationService
