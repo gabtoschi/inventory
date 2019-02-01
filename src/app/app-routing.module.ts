@@ -8,7 +8,8 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   {path: '', component: SplashComponent, pathMatch: 'full'},
   {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'collection', loadChildren: "./collection/collection.module#CollectionModule"}
 ];
 
 @NgModule({

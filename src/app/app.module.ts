@@ -29,8 +29,8 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
+    AppRoutingModule,
     AlertModule.forRoot()
   ],
   providers: [
