@@ -9,6 +9,11 @@
 
         <form #f="ngForm" (ngSubmit)="submitLogin(f)">
 
+          <alert *ngIf="showErrorAlert" type="danger" dismissible="true"
+            (onClosed)="resetErrorAlert()">
+            <strong>Ops!</strong> {{ errorAlertMessage }}
+          </alert>
+
           <div class="form-group">
             <label for="email">E-mail</label>
             <input type="text" class="form-control" id="email" placeholder="player@inventory.com"
