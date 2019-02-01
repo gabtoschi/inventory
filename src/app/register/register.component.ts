@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit {
 
   // updates valid and invalid Bootstrap classes
   updateValidationCSS(field: FormControl){
-    return this.validation.updateValidationCSS(field);
+    return this.validation.updateValidationCSS(field, false);
   }
 
   // clear password confirmation when a new password entered

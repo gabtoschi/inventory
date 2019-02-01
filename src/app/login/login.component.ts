@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   // updates valid and invalid Bootstrap classes
   updateValidationCSS(field: FormControl){
-    return this.validation.updateValidationCSS(field);
+    return this.validation.updateValidationCSS(field, true);
   }
 
   constructor(

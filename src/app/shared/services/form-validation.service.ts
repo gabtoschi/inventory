@@ -17,10 +17,10 @@ export class FormValidationService {
   }
 
   // updates valid and invalid Bootstrap classes
-  updateValidationCSS(field: FormControl | AbstractControl){
+  updateValidationCSS(field: FormControl | AbstractControl, onlyError: boolean){
     return {
       'is-invalid': this.isFieldInvalid(field),
-      'is-valid': this.isFieldValid(field),
+      'is-valid': onlyError ? false : this.isFieldValid(field)
     }
   }
 
