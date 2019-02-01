@@ -19,7 +19,7 @@ export class AuthService {
   static isLoggedIn: boolean = false;
 
   // confirm a user registration
-  registerUser(newUser: NewUserData){
+  registerUser(newUser: NewUserData): null | string {
     // placeholder for tests
 
     let alreadyExists: boolean = false;
@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   // confirm a user login
-  loginUser(login: LoginData){
+  loginUser(login: LoginData): null | string {
     // placeholder for tests
 
     let userRegistered: boolean = false;
@@ -59,6 +59,13 @@ export class AuthService {
 
     AuthService.isLoggedIn = userRegistered;
     return userRegistered ? null : "E-mail or password wrong.";
+  }
+
+  logoutUser(): boolean {
+    if (AuthService.isLoggedIn){
+      AuthService.isLoggedIn = false;
+      return true;
+    } return false;
   }
 
   constructor() { }

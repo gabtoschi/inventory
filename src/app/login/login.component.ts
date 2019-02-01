@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(['/collection']);
     }
 
     console.log(this.loginData);
