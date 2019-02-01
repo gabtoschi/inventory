@@ -8,6 +8,16 @@
       <div class="card-body">
 
         <form #f="ngForm" (ngSubmit)="confirmRegister(f)">
+          <alert *ngIf="showErrorAlert" type="danger" dismissible="true"
+            (onClosed)="resetErrorAlert()">
+            <strong>Ops!</strong> {{ errorAlertMessage }}
+          </alert>
+
+          <alert *ngIf="showSuccessAlert" type="success" dismissible="true"
+            (onClosed)="resetSuccessAlert()">
+            Your registration was successful! <a routerLink="/login" class="alert-link">Click here to log in.</a>
+          </alert>
+
           <div class="form-group">
               <label for="name">Name</label>
               <input type="text" class="form-control" id="name" placeholder="Player"

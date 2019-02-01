@@ -11,15 +11,18 @@ import { FormValidationService } from './../shared/services/form-validation.serv
 })
 export class LoginComponent implements OnInit {
 
+  // sync with form to obtain login data
   loginData: LoginData = {
     email: null,
     password: null
   }
 
+  // sends the data to the module to confirm the login
   submitLogin(form){
     console.log(this.loginData);
   }
 
+  // updates valid and invalid Bootstrap classes
   updateValidationCSS(field: FormControl){
     return this.validation.updateValidationCSS(field);
   }
