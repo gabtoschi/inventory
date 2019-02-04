@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 
 import { CollectionComponent } from './collection.component';
 import { CollectionRoutingModule } from './collection-routing.module';
+import { CollectionListComponent } from './collection-list/collection-list.component';
 
 @NgModule({
   declarations: [
-    CollectionComponent
+    CollectionComponent,
+    CollectionListComponent
   ],
   imports: [
     CommonModule,
