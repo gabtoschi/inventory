@@ -3,11 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { GamesService } from './../games.service';
 import { Game } from './../../shared/models/game';
 
-export class GameListData {
-  gameData: Game;
-  isActive: boolean;
-}
-
 @Component({
   selector: 'app-collection-list',
   templateUrl: './collection-list.component.html',
@@ -15,19 +10,14 @@ export class GameListData {
 })
 export class CollectionListComponent implements OnInit {
 
-  gameList: GameListData[] = new Array<GameListData>();
+  gameList: Game[] = null;
 
   constructor(
     private gamesServ: GamesService
   ) { }
 
   ngOnInit() {
-    this.gamesServ.getGameList().forEach((game) => {
-      this.gameList.push({
-        gameData: game,
-        isActive: game.name == "Portal 2" ? true : false
-      });
-    });
+    this.gameList = this.gamesServ.getGameList();
   }
 
 }
