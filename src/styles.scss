@@ -1,3 +1,9 @@
+$inventoryRefColor: #6f42c1;
+
+$component-active-bg: $inventoryRefColor;
+$list-group-action-active-color: white;
+$list-group-action-hover-color: $inventoryRefColor;
+
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
@@ -5,7 +11,7 @@
 @import "../node_modules/bootstrap/scss/navbar";
 
 // Site Colors
-$inventoryDefaultColor: $purple;
+$inventoryDefaultColor: $inventoryRefColor;
 $inventoryDarkColor: darken($inventoryDefaultColor, 20);
 $inventoryDarkestColor: darken($inventoryDefaultColor, 40);
 $inventoryLightColor: lighten($inventoryDefaultColor, 20);
