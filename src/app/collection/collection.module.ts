@@ -7,13 +7,15 @@ import { CollectionComponent } from './collection.component';
 import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { GameDetailComponent } from './game-detail/game-detail.component';
+import { NewGameFormComponent } from './new-game-form/new-game-form.component';
 
 @NgModule({
   declarations: [
     CollectionComponent,
     CollectionListComponent,
     GameDetailComponent,
-    CommaListPipe
+    CommaListPipe,
+    NewGameFormComponent
   ],
   imports: [
     CommonModule,
