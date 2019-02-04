@@ -1,3 +1,16 @@
-<p>
-  game-detail works!
-</p>
+<div class="card">
+  <div class="card-header text-light bg-inventory">
+    <b>{{ gameData.name }}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><b class="text-inventory">Launch Date: </b> {{ gameData.launchDate | date:"yyyy-MM-dd" }}</p>
+    <p class="card-text"><b class="text-inventory">Developer: </b> {{ gameData.developer }}</p>
+    <p class="card-text"><b class="text-inventory">Publisher: </b> {{ gameData.publisher }}</p>
+    <p class="card-text"><b class="text-inventory">Genre: </b> {{ gameData.category }}</p>
+    <p class="card-text"><b class="text-inventory">Platforms: </b> {{ gameData.platforms | commaList }}</p>
+  </div>
+  <div class="card-footer bg-inventory">
+    <a href="#" class="card-link text-light"><i class="fas fa-edit"></i> <b> Edit</b></a>
+    <a href="#" class="card-link text-light"><i class="fas fa-trash"></i> <b> Remove</b></a>
+  </div>
+</div>

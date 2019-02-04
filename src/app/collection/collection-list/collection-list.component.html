@@ -1,12 +1,8 @@
-<div class="row">
-  <div class="col-6">
-    <ul class="list-group">
-      <a routerLink="/collection" *ngFor="let game of gameList" class="list-group-item list-group-item-action"
-        [class.active]="game.isActive">
-        <b>{{ game.gameData.name }} </b> <i class="fas fa-chevron-circle-right"></i>
-        <br>
-        <span *ngFor="let plat of game.gameData.platforms" class="badge">{{ plat }}</span>
-      </a>
-    </ul>
-  </div>
-</div>
+<ul class="list-group">
+  <a routerLink="/collection" *ngFor="let game of gameList" class="list-group-item list-group-item-action"
+    [class.active]="game.isActive">
+    <b>{{ game.gameData.name }} </b> <i class="fas fa-chevron-circle-right"></i>
+    <br>
+    <span *ngFor="let plat of game.gameData.platforms" class="badge">{{ plat }}</span>
+  </a>
+</ul>

@@ -2,7 +2,7 @@
 
 <div class="container">
 <div class="row">
-  <div class="card col-12">
+  <div class="card col-12 border-0">
     <div class="card-body mx-auto">
 
       <div class="btn-group mr-2" role="group">
@@ -22,7 +22,13 @@
 </div>
 
 <br>
-<app-collection-list></app-collection-list>
+<div class="row">
+  <div class="col-6">
+    <app-collection-list></app-collection-list>
+  </div>
+  <div class="col-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>
 
-<router-outlet></router-outlet>
 </div>

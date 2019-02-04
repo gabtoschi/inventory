@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Game } from './../shared/models/game';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class GamesService {
     {
       slug: "super-mario-odyssey",
       name: "Super Mario Odyssey",
-      launchDate: new Date(2017, 10, 27),
+      launchDate: new Date(2017, 9, 27),
       developer: "Nintendo EPD",
       publisher: "Nintendo",
       platforms: ["Nintendo Switch"],
@@ -21,9 +22,9 @@ export class GamesService {
     {
       slug: "portal-2",
       name: "Portal 2",
-      launchDate: new Date(2011, 4, 19),
-      developer: "Nintendo EPD",
-      publisher: "Nintendo",
+      launchDate: new Date(2011, 3, 19),
+      developer: "Valve",
+      publisher: "Valve Corporation",
       platforms: ["Windows PC", "Mac OS X", "Linux", "PlayStation 3", "Xbox 360"],
       category: "Puzzle"
     },
@@ -31,6 +32,14 @@ export class GamesService {
 
   getGameList(){
     return this._games;
+  }
+
+  getGameBySlug(slug: string){
+    for (let game of this._games){
+      if (game.slug === slug) return game;
+    }
+
+    return null;
   }
 
   constructor() { }
