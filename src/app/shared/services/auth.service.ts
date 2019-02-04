@@ -16,7 +16,7 @@ export class AuthService {
   _currentUser: NewUserData = null;
   
   // reference for auth guard
-  static isLoggedIn: boolean = false;
+  static isLoggedIn: boolean = true;
 
   // confirm a user registration
   registerUser(newUser: NewUserData): null | string {
@@ -61,6 +61,7 @@ export class AuthService {
     return userRegistered ? null : "E-mail or password wrong.";
   }
 
+  // make a user logout
   logoutUser(): boolean {
     if (AuthService.isLoggedIn){
       AuthService.isLoggedIn = false;
