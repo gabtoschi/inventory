@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 import { CollectionComponent } from './collection.component';
 import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionListComponent } from './collection-list/collection-list.component';
+import { GameDetailComponent } from './game-detail/game-detail.component';
 
 @NgModule({
   declarations: [
     CollectionComponent,
-    CollectionListComponent
+    CollectionListComponent,
+    GameDetailComponent
   ],
   imports: [
     CommonModule,

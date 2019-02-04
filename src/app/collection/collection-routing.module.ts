@@ -3,9 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CollectionComponent } from './collection.component';
+import { GameDetailComponent } from './game-detail/game-detail.component';
 
 const collectionRoutes : Routes = [
-  {path: '', component: CollectionComponent}
+  {path: '', component: CollectionComponent, children: [
+    {path: ':slug', component: GameDetailComponent}
+  ]},
+  
 ];
 
 @NgModule({

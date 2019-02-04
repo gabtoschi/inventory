@@ -1,4 +1,5 @@
 export class Game {
+    slug: string;
     name: string;
     launchDate: Date;
     developer: string;
