@@ -13,7 +13,6 @@ export class GamesService {
     {
       slug: "super-mario-odyssey",
       name: "Super Mario Odyssey",
-      launchDate: new Date(2017, 9, 27),
       developer: "Nintendo EPD",
       publisher: "Nintendo",
       platforms: ["Nintendo Switch"],
@@ -22,7 +21,6 @@ export class GamesService {
     {
       slug: "portal-2",
       name: "Portal 2",
-      launchDate: new Date(2011, 3, 19),
       developer: "Valve",
       publisher: "Valve Corporation",
       platforms: ["Windows PC", "Mac OS X", "Linux", "PlayStation 3", "Xbox 360"],

@@ -9,7 +9,7 @@ import { NewGameFormComponent } from './new-game-form/new-game-form.component';
 const collectionRoutes : Routes = [
   {path: '', component: CollectionComponent, children: [
     {path: 'new', component: NewGameFormComponent},
-    {path: ':slug', component: GameDetailComponent}    
+    {path: 'view/:slug', component: GameDetailComponent}    
   ]},
   
 ];

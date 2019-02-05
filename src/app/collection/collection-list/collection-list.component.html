@@ -1,6 +1,6 @@
 <ul class="list-group">
   <a *ngFor="let game of gameList" class="list-group-item list-group-item-action"
-    [routerLink]="['/collection', game.slug]" routerLinkActive="active">
+    [routerLink]="['/collection/view', game.slug]" routerLinkActive="active">
     <b>{{ game.name }} </b> <i class="fas fa-chevron-circle-right"></i>
     <br>
     <span *ngFor="let plat of game.platforms" class="badge">{{ plat }}</span>
