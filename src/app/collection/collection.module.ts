@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CommaListPipe } from './../shared/pipes/comma-list.pipe';
 
+import { AlertModule } from 'ngx-bootstrap';
+
 import { CollectionComponent } from './collection.component';
 import { CollectionRoutingModule } from './collection-routing.module';
 import { CollectionListComponent } from './collection-list/collection-list.component';
@@ -24,7 +26,8 @@ import { NewGameFormComponent } from './new-game-form/new-game-form.component';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    CollectionRoutingModule
+    CollectionRoutingModule,
+    AlertModule.forRoot()
   ]
 })
 export class CollectionModule { }

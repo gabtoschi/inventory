@@ -10,6 +10,11 @@ $list-group-action-hover-color: $inventoryRefColor;
 
 @import "../node_modules/bootstrap/scss/navbar";
 
+// Links with (click)
+.link-click {
+  cursor: pointer;
+}
+
 // Site Colors
 $inventoryDefaultColor: $inventoryRefColor;
 $inventoryDarkColor: darken($inventoryDefaultColor, 20);

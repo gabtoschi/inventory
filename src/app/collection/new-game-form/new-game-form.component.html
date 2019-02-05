@@ -5,21 +5,31 @@
   <div class="card-body">
     <form [formGroup]="newGameForm">
 
+      <alert *ngIf="showErrorAlert" type="danger" dismissible="true"
+      (onClosed)="resetErrorAlert()">
+        <strong>Ops!</strong> {{ errorAlertMessage }}
+      </alert>
+
+      <alert *ngIf="showSuccessAlert" type="success" dismissible="true"
+        (onClosed)="resetSuccessAlert()">
+        The game was registered successfully!
+      </alert>
+
       <div class="form-group">
-        <p class="card-text"> <b class="text-inventory">Name</b>
-          <input type="text" class="form-control" formControlName="name" placeholder="The Legend of War">
-        </p>
+        <span class="card-text"> <b class="text-inventory">Name</b></span><br>
+        <input type="text" class="form-control" formControlName="name" placeholder="Game Name" id="name" [ngClass]="updateValidationCSS('name')">
+        <div class="invalid-feedback"> Game name is required. </div>
       </div>
 
       <div class="form-group">
         <p class="card-text"> <b class="text-inventory">Developer</b>
-          <input type="text" class="form-control" formControlName="developer" placeholder="We Make Games">
+          <input type="text" class="form-control" formControlName="developer" placeholder="Game Developer">
         </p>
       </div>
 
       <div class="form-group">
         <p class="card-text"> <b class="text-inventory">Publisher</b>
-          <input type="text" class="form-control" formControlName="publisher" placeholder="Enterprise Inc.">
+          <input type="text" class="form-control" formControlName="publisher" placeholder="Game Publisher">
         </p>
       </div>
 
@@ -51,14 +61,16 @@
             </button>
           </div>
         </div>
-        
+
       </div>
 
     </form>
+
+    {{ newGameForm.value | json }}
    
   </div>
   <div class="card-footer bg-inventory">
-    <a [routerLink]="" class="card-link text-light"><i class="fas fa-check"></i> <b> Confirm</b></a>
-    <a [routerLink]="" class="card-link text-light"><i class="fas fa-times"></i> <b> Cancel</b></a>
+    <a (click)="submitForm()" class="card-link text-light link-click"><i class="fas fa-check"></i> <b> Confirm</b></a>
+    <a routerLink="/collection" class="card-link text-light"><i class="fas fa-times"></i> <b> Cancel</b></a>
   </div>
 </div>
