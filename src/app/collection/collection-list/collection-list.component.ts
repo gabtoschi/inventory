@@ -17,6 +17,7 @@ export class CollectionListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.gamesServ.sortGames();
     this.gameList = this.gamesServ.getGameList();
   }
 

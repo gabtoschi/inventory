@@ -38,7 +38,8 @@ export class GamesService {
     if (gameCounter > 0) newGame.slug += '-' + gameCounter;
 
     this._games.push(newGame);
-    console.log(newGame);
+    this.sortGames();
+    console.log(this._games);
     
     return null;
   }
@@ -47,9 +48,16 @@ export class GamesService {
     for (let game of this._games){
       if (slugToRemove == game.slug){
         this._games.splice(this._games.indexOf(game), 1);
+        this.sortGames();
         break;
       }
     }
+  }
+
+  sortGames() {
+    this._games.sort((a, b) => {
+      return a.slug.localeCompare(b.slug);
+    });
   }
 
   constructor() { }
