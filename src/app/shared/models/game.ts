@@ -11,7 +11,7 @@ export class Game {
         this.developer = developer;
         this.publisher = publisher;
         this.category = category;
-        this.platforms = platforms;
+        this.platforms = platforms.sort();
         this.slug = this.generateSlug(name);
     }
 
