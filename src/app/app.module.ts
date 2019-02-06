@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { AlertModule, ButtonsModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { AlertModule, ButtonsModule } from 'ngx-bootstrap';
 
 import { StringMatchValidatorDirective } from './shared/directives/string-match-validator.directive';
 
@@ -32,8 +32,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     AppRoutingModule,
     AlertModule.forRoot(),
-    ButtonsModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    ButtonsModule.forRoot()
   ],
   providers: [
     FormValidationService

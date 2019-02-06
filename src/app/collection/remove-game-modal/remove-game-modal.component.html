@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Delete {{ gameName }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  Are you sure you want to <b>delete game {{ gameName }}</b>?
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-inventory-outline" (click)="modalRef.hide()">Cancel</button>
+  <button type="button" class="btn btn-inventory" (click)="modalRef.hide()">Delete</button>
+</div>

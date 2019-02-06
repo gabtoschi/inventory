@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 
 import { Game } from './../../shared/models/game';
 import { GamesService } from './../games.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { RemoveGameModalComponent } from '../remove-game-modal/remove-game-modal.component';
 
 @Component({
   selector: 'app-game-detail',
@@ -15,11 +17,18 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   gameData: Game = null;
   gameDataSub: Subscription;
 
+  removeModal: BsModalRef;
+
   constructor(
     private route: ActivatedRoute,
     private gamesServ: GamesService,
-    private router: Router
+    private router: Router,
+    private modalService: BsModalService
   ) { }
+
+  openRemoveModal(){
+    this.removeModal = this.modalService.show(RemoveGameModalComponent, {initialState: {gameName: this.gameData.name}});
+  }
 
   ngOnInit() {
     this.gameDataSub = this.route.params.subscribe(
