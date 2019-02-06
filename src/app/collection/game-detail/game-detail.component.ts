@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -27,7 +27,16 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   openRemoveModal(){
-    this.removeModal = this.modalService.show(RemoveGameModalComponent, {initialState: {gameName: this.gameData.name}});
+    this.removeModal = this.modalService.show(RemoveGameModalComponent, {
+      initialState: {
+        gameName: this.gameData.name,
+        onConfirm: () => {
+          this.removeModal.hide();
+          this.gamesServ.removeGame(this.gameData.slug);
+          this.router.navigate(['/collection']);
+        }
+      }
+    });
   }
 
   ngOnInit() {

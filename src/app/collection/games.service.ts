@@ -43,5 +43,14 @@ export class GamesService {
     return null;
   }
 
+  removeGame(slugToRemove: string){
+    for (let game of this._games){
+      if (slugToRemove == game.slug){
+        this._games.splice(this._games.indexOf(game), 1);
+        break;
+      }
+    }
+  }
+
   constructor() { }
 }
