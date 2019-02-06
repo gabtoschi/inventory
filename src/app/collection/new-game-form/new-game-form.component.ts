@@ -4,6 +4,8 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { GameGenres } from './../../shared/models/game-genres';
 import { GamePlatforms } from './../../shared/models/game-platforms';
 import { FormValidationService } from './../../shared/services/form-validation.service';
+import { GamesService } from './../games.service';
+import { Game } from 'src/app/shared/models/game';
 
 @Component({
   selector: 'app-new-game-form',
@@ -88,7 +90,19 @@ export class NewGameFormComponent implements OnInit {
       });
 
     } else {
-      //errorMessage = this.auth.registerUser(this.newUser);
+      let platforms: string[] = [];
+      for (let control of this.platformsControl.controls)
+        if (control.value != null) platforms.push(control.value);
+
+      let newGame = new Game(
+        this.newGameForm.get('name').value,
+        this.newGameForm.get('developer').value,
+        this.newGameForm.get('publisher').value,
+        this.newGameForm.get('category').value,
+        platforms
+      );
+
+      errorMessage = this.gamesServ.addNewGame(newGame);
     }
 
     if (errorMessage != null){
@@ -110,7 +124,8 @@ export class NewGameFormComponent implements OnInit {
 
   constructor(
     private builder: FormBuilder,
-    private validation: FormValidationService
+    private validation: FormValidationService,
+    private gamesServ: GamesService
   ) { }
 
   ngOnInit() {

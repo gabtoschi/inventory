@@ -10,22 +10,8 @@ export class GamesService {
 
   // placeholders for tests
   _games: Game[] = [
-    {
-      slug: "super-mario-odyssey",
-      name: "Super Mario Odyssey",
-      developer: "Nintendo EPD",
-      publisher: "Nintendo",
-      platforms: ["Nintendo Switch"],
-      category: "Platform"
-    },
-    {
-      slug: "portal-2",
-      name: "Portal 2",
-      developer: "Valve",
-      publisher: "Valve Corporation",
-      platforms: ["Windows PC", "Mac OS X", "Linux", "PlayStation 3", "Xbox 360"],
-      category: "Puzzle"
-    },
+    new Game("Super Mario Odyssey", "Nintendo EPD", "Nintendo", "Platform", ["Nintendo Switch"]),
+    new Game("Portal 2", "Valve", "Valve Corporation", "Puzzle", ["Windows PC", "Mac OS X", "Linux", "PlayStation 3", "Xbox 360"])
   ];
 
   getGameList(){
@@ -37,6 +23,23 @@ export class GamesService {
       if (game.slug === slug) return game;
     }
 
+    return null;
+  }
+
+  addNewGame(newGame: Game): string | null {
+    let gameCounter = 0;
+
+    for (let game of this._games){
+      if (game.slug == (newGame.slug + (gameCounter == 0 ? '' : ('-' + gameCounter)))){
+        gameCounter++;
+      }
+    }
+
+    if (gameCounter > 0) newGame.slug += '-' + gameCounter;
+
+    this._games.push(newGame);
+    console.log(newGame);
+    
     return null;
   }
 
