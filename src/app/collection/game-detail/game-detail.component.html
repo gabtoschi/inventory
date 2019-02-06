@@ -9,7 +9,7 @@
     <p *ngIf="gameData.platforms.length > 0" class="card-text"><b class="text-inventory">Platforms: </b> {{ gameData.platforms | commaList }}</p>
   </div>
   <div class="card-footer bg-inventory">
-    <a [routerLink]="['/collection/edit', gameData.slug]" class="card-link text-light"><i class="fas fa-edit"></i> <b> Edit</b></a>
+    <a [routerLink]="['/collection', gameData.slug, 'edit']" class="card-link text-light"><i class="fas fa-edit"></i> <b> Edit</b></a>
     <a (click)="openRemoveModal()" class="card-link text-light link-click"><i class="fas fa-trash"></i> <b> Remove</b></a>
   </div>
 </div>

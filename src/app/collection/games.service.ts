@@ -44,6 +44,22 @@ export class GamesService {
     return null;
   }
 
+  editGame(newData: Game, originalSlug: string): string | null {
+    newData.slug = originalSlug;
+
+    for (let game of this._games){
+      if (originalSlug == game.slug){
+        this._games.splice(this._games.indexOf(game), 1, newData);
+        this.sortGames();
+        break;
+      }
+    }
+    
+    console.log(this._games);
+    
+    return null;
+  }
+
   removeGame(slugToRemove: string){
     for (let game of this._games){
       if (slugToRemove == game.slug){
@@ -56,7 +72,7 @@ export class GamesService {
 
   sortGames() {
     this._games.sort((a, b) => {
-      return a.slug.localeCompare(b.slug);
+      return a.name.localeCompare(b.name);
     });
   }
 

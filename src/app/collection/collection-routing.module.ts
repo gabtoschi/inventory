@@ -10,8 +10,8 @@ import { EditGameFormComponent } from './edit-game-form/edit-game-form.component
 const collectionRoutes : Routes = [
   {path: '', component: CollectionComponent, children: [
     {path: 'new', component: NewGameFormComponent},
-    {path: 'view/:slug', component: GameDetailComponent},
-    {path: 'edit/:slug', component: EditGameFormComponent}    
+    {path: ':slug/view', component: GameDetailComponent},
+    {path: ':slug/edit', component: EditGameFormComponent}    
   ]},
   
 ];

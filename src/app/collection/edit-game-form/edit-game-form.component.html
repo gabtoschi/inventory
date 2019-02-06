@@ -1,3 +1,76 @@
-<p>
-  edit-game-form works!
-</p>
+<div class="card">
+    <div class="card-header text-light bg-inventory">
+      <b>Editing {{ gameName }}</b>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="editGameForm">
+  
+        <alert *ngIf="showErrorAlert" type="danger" dismissible="true"
+        (onClosed)="resetErrorAlert()">
+          <strong>Ops!</strong> {{ errorAlertMessage }}
+        </alert>
+  
+        <div class="form-group">
+          <span class="card-text"> <b class="text-inventory">URL Name</b></span><br>
+          <input type="text" class="form-control form-control-plaintext" readonly formControlName="slug">
+        </div>
+
+        <div class="form-group">
+          <span class="card-text"> <b class="text-inventory">Name</b></span><br>
+          <input type="text" class="form-control" formControlName="name" placeholder="Game Name" id="name" [ngClass]="updateValidationCSS('name')">
+          <div class="invalid-feedback"> Game name is required. </div>
+        </div>
+  
+        <div class="form-group">
+          <p class="card-text"> <b class="text-inventory">Developer</b>
+            <input type="text" class="form-control" formControlName="developer" placeholder="Game Developer">
+          </p>
+        </div>
+  
+        <div class="form-group">
+          <p class="card-text"> <b class="text-inventory">Publisher</b>
+            <input type="text" class="form-control" formControlName="publisher" placeholder="Game Publisher">
+          </p>
+        </div>
+  
+        <div class="form-group">
+          <p class="card-text"> <b class="text-inventory">Genre</b>
+            <select class="form-control custom-select" formControlName="category">
+              <option *ngFor="let genre of genres">{{ genre }}</option>
+            </select>
+          </p>
+        </div>
+  
+        <div class="form-group">
+          <p class="card-text"> <b class="text-inventory">Platforms</b><br>
+            <span *ngFor="let platform of platformsSelected" class="badge badge-pill badge-inventory">
+              {{ platform }} <a class="text-light" (click)="deselectPlatform(platform)"> <i class="fas fa-times-circle"></i> </a>
+            </span>
+          </p>
+          
+          <div class="form-row">
+            <div class="col-10">
+              <select class="form-control custom-select" formControlName="selectPlatform" placeholder="teste">
+                <option *ngFor="let platform of platforms">{{ platform }}</option>
+              </select>
+            </div>
+  
+            <div class="col-1">
+              <button type="button" class="btn btn-outline-inventory" (click)="selectPlatform()">
+                <i class="fas fa-plus"></i> 
+              </button>
+            </div>
+          </div>
+  
+        </div>
+  
+      </form>
+  
+      {{ editGameForm.value | json }}
+     
+    </div>
+    <div class="card-footer bg-inventory">
+      <a (click)="submitForm()" class="card-link text-light link-click"><i class="fas fa-check"></i> <b> Confirm</b></a>
+      <a routerLink="/collection" class="card-link text-light"><i class="fas fa-times"></i> <b> Cancel</b></a>
+    </div>
+  </div>
