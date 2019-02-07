@@ -1,0 +1,14 @@
+<ul class="pagination justify-content-center">
+  <li class="page-item"><a class="page-link text-inventory" (click)="previousPage()">
+    <i class="fas fa-caret-left"></i>
+  </a></li>
+
+  <li *ngFor="let page of pages" class="page-item" [class.active]="page == currentPage">
+    <a class="page-link" [class.text-inventory]="page != currentPage" [class.text-light]="page == currentPage" 
+    (click)="pageClicked(page)">{{ page }}</a>
+  </li>
+
+  <li class="page-item"><a class="page-link text-inventory" (click)="nextPage()">
+    <i class="fas fa-caret-right"></i>
+  </a></li>
+</ul>

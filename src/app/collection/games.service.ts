@@ -76,5 +76,9 @@ export class GamesService {
     });
   }
 
-  constructor() { }
+  constructor() {
+    for (let i = 10; i < 63; i++){
+      this._games.push(new Game(`Assassin's Creed ${i}`, "Bugsoft São Carlos", "Bugsoft", "Puzzle", ["Wii U"]));
+    }
+  }
 }
