@@ -12,24 +12,23 @@ export class CollectionListComponent implements OnInit {
 
   gameList: Game[] = null;
 
-  maxPages: number = 5;
-  perPage: number = 6;
-  
-  firstIndex: number = 1;
-  lastIndex: number = this.perPage;
+  public maxPages = 5;
+  public perPage = 6;
+
+  public firstIndex = 1;
+  public lastIndex = this.perPage;
 
   constructor(
     private gamesServ: GamesService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.gamesServ.sortGames();
     this.gameList = this.gamesServ.getGameList();
-    console.log("test");
   }
 
-  pageChanged(value : number){
-    let page = value - 1;
+  private pageChanged(value: number) {
+    const page = value - 1;
 
     this.firstIndex = this.perPage * page;
     this.lastIndex = this.firstIndex + (this.perPage - 1);

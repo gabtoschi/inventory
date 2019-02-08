@@ -13,18 +13,18 @@ import { Game } from 'src/app/shared/models/game';
   styleUrls: ['./new-game-form.component.scss']
 })
 export class NewGameFormComponent implements OnInit {
-  
-  genres: string[] = GameGenres.sort();
-  platforms: string[] = GamePlatforms.sort();
 
-  platformsSelected: string[] = [];
+  public genres: string[] = GameGenres.sort();
+  public platforms: string[] = GamePlatforms.sort();
+
+  public platformsSelected: string[] = [];
 
   // to show alerts after submitting
-  showErrorAlert: boolean = false;
-  errorAlertMessage: string;
-  showSuccessAlert: boolean = false;
+  public showErrorAlert = false;
+  public errorAlertMessage: string;
+  public showSuccessAlert = false;
 
-  newGameForm: FormGroup = this.builder.group({
+  public newGameForm: FormGroup = this.builder.group({
     name: ['', Validators.required],
     developer: [''],
     publisher: [''],
@@ -37,20 +37,30 @@ export class NewGameFormComponent implements OnInit {
     return this.newGameForm.get('platforms') as FormArray;
   }
 
-  selectPlatform(){
-    let newPlatform = this.newGameForm.get('selectPlatform').value;
+  constructor(
+    private builder: FormBuilder,
+    private validation: FormValidationService,
+    private gamesServ: GamesService
+  ) { }
 
-    if (!this.platformsSelected.includes(newPlatform)){
+  public ngOnInit() {
+    this.resetSelects();
+  }
+
+  public selectPlatform() {
+    const newPlatform = this.newGameForm.get('selectPlatform').value;
+
+    if (!this.platformsSelected.includes(newPlatform)) {
       this.platformsSelected.push(newPlatform);
       this.platformsControl.push(this.builder.control(newPlatform));
     }
   }
 
-  deselectPlatform(platform: string){
+  public deselectPlatform(platform: string) {
     this.platformsSelected.splice(this.platformsSelected.indexOf(platform), 1);
-    
-    for (let control of this.platformsControl.controls){
-      if (control.value == platform){
+
+    for (const control of this.platformsControl.controls) {
+      if (control.value === platform) {
         this.platformsControl.removeAt(this.platformsControl.controls.indexOf(control));
         break;
       }
@@ -58,43 +68,47 @@ export class NewGameFormComponent implements OnInit {
   }
 
   // updates valid and invalid Bootstrap classes
-  updateValidationCSS(fieldName: string){
+  public updateValidationCSS(fieldName: string) {
     return this.validation.updateValidationCSS(this.newGameForm.get(fieldName), true);
   }
 
   // resets after-submit alerts
-  resetErrorAlert(){
-    this.errorAlertMessage = "";
+  public resetErrorAlert() {
+    this.errorAlertMessage = '';
     this.showErrorAlert = false;
   }
 
-  resetSuccessAlert(){
+  public resetSuccessAlert() {
     this.showSuccessAlert = false;
   }
 
-  submitForm(){
+  public submitForm() {
     this.resetErrorAlert();
     this.resetSuccessAlert();
 
     let errorMessage = null;
 
-    if (!this.newGameForm.valid){
-      errorMessage = "There are errors below. Please check all fields."
+    if (!this.newGameForm.valid) {
+      errorMessage = 'There are errors below. Please check all fields.';
 
       Object.keys(this.newGameForm.controls).forEach(key => {
-        let control = this.newGameForm.controls[key];
+        const control = this.newGameForm.controls[key];
 
-        if (control.invalid){
+        if (control.invalid) {
           control.markAsTouched();
         }
       });
 
     } else {
-      let platforms: string[] = [];
-      for (let control of this.platformsControl.controls)
-        if (control.value != null) platforms.push(control.value);
+      const platforms: string[] = [];
 
-      let newGame = new Game(
+      for (const control of this.platformsControl.controls) {
+        if (control.value != null) {
+          platforms.push(control.value);
+        }
+      }
+
+      const newGame = new Game(
         this.newGameForm.get('name').value,
         this.newGameForm.get('developer').value,
         this.newGameForm.get('publisher').value,
@@ -105,14 +119,14 @@ export class NewGameFormComponent implements OnInit {
       errorMessage = this.gamesServ.addNewGame(newGame);
     }
 
-    if (errorMessage != null){
+    if (errorMessage != null) {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
     } else {
       this.showSuccessAlert = true;
 
       Object.keys(this.newGameForm.controls).forEach(key => {
-        let control = this.newGameForm.controls[key];
+        const control = this.newGameForm.controls[key];
 
         control.markAsUntouched();
         control.reset();
@@ -122,22 +136,12 @@ export class NewGameFormComponent implements OnInit {
     }
   }
 
-  constructor(
-    private builder: FormBuilder,
-    private validation: FormValidationService,
-    private gamesServ: GamesService
-  ) { }
-
-  ngOnInit() {
-    this.resetSelects();
-  }
-
-  resetSelects(){
+  resetSelects() {
     this.newGameForm.get('selectPlatform').setValue(this.platforms[0]);
     this.newGameForm.get('category').setValue(this.genres[0]);
     this.platformsSelected = [];
 
-    for (let i = 0; i < this.platformsControl.controls.length; i++){
+    for (let i = 0; i < this.platformsControl.controls.length; i++) {
       this.platformsControl.removeAt(i);
     }
   }

@@ -5,7 +5,7 @@ export function stringMatchValidator(match: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     return match && control.value && match === control.value
       ? null : { 'passwordMatch' : true };
-  }
+  };
 }
 
 @Directive({
@@ -18,7 +18,7 @@ export class StringMatchValidatorDirective {
 
   @Input('stringMatch') stringToMatch: string;
 
-  validate(control: AbstractControl): ValidationErrors {
+  public validate(control: AbstractControl): ValidationErrors {
     return stringMatchValidator(this.stringToMatch)(control);
   }
 

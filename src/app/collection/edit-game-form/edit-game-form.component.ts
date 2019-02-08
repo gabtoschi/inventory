@@ -15,19 +15,20 @@ import { GameGenres } from './../../shared/models/game-genres';
   styleUrls: ['./edit-game-form.component.scss']
 })
 export class EditGameFormComponent implements OnInit, OnDestroy {
-  gameToEdit: Game;
-  gameToEditSub: Subscription;
 
-  genres: string[] = GameGenres.sort();
-  platforms: string[] = GamePlatforms.sort();
+  private gameToEdit: Game;
+  private gameToEditSub: Subscription;
 
-  platformsSelected: string[] = [];
+  public genres: string[] = GameGenres.sort();
+  public platforms: string[] = GamePlatforms.sort();
+
+  public platformsSelected: string[] = [];
 
   // to show alerts after submitting
-  showErrorAlert: boolean = false;
-  errorAlertMessage: string;
+  public showErrorAlert = false;
+  public errorAlertMessage: string;
 
-  editGameForm: FormGroup = this.builder.group({
+  public editGameForm: FormGroup = this.builder.group({
     slug: ['', Validators.required],
     name: ['', Validators.required],
     developer: [''],
@@ -45,20 +46,47 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
     return this.editGameForm.get('name').value as string;
   }
 
-  selectPlatform(){
-    let newPlatform = this.editGameForm.get('selectPlatform').value;
+  constructor(
+    private builder: FormBuilder,
+    private validation: FormValidationService,
+    private gamesServ: GamesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-    if (!this.platformsSelected.includes(newPlatform)){
+  public ngOnInit() {
+    this.gameToEditSub = this.route.params.subscribe(
+      (params: any) => {
+        const slug = params['slug'];
+        this.gameToEdit = this.gamesServ.getGameBySlug(slug);
+      }
+    );
+
+    if (this.gameToEdit == null) {
+      this.router.navigate(['/collection']);
+    }
+
+    this.startEditForm();
+  }
+
+  public ngOnDestroy() {
+    this.gameToEditSub.unsubscribe();
+  }
+
+  public selectPlatform() {
+    const newPlatform = this.editGameForm.get('selectPlatform').value;
+
+    if (!this.platformsSelected.includes(newPlatform)) {
       this.platformsSelected.push(newPlatform);
       this.platformsControl.push(this.builder.control(newPlatform));
     }
   }
 
-  deselectPlatform(platform: string){
+  public deselectPlatform(platform: string) {
     this.platformsSelected.splice(this.platformsSelected.indexOf(platform), 1);
-    
-    for (let control of this.platformsControl.controls){
-      if (control.value == platform){
+
+    for (const control of this.platformsControl.controls) {
+      if (control.value === platform) {
         this.platformsControl.removeAt(this.platformsControl.controls.indexOf(control));
         break;
       }
@@ -66,38 +94,42 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
   }
 
   // updates valid and invalid Bootstrap classes
-  updateValidationCSS(fieldName: string){
+  public updateValidationCSS(fieldName: string) {
     return this.validation.updateValidationCSS(this.editGameForm.get(fieldName), true);
   }
 
   // resets after-submit alerts
-  resetErrorAlert(){
-    this.errorAlertMessage = "";
+  public resetErrorAlert() {
+    this.errorAlertMessage = '';
     this.showErrorAlert = false;
   }
 
-  submitForm(){
+  public submitForm() {
     this.resetErrorAlert();
 
     let errorMessage = null;
 
-    if (!this.editGameForm.valid){
-      errorMessage = "There are errors below. Please check all fields."
+    if (!this.editGameForm.valid) {
+      errorMessage = 'There are errors below. Please check all fields.';
 
       Object.keys(this.editGameForm.controls).forEach(key => {
-        let control = this.editGameForm.controls[key];
+        const control = this.editGameForm.controls[key];
 
-        if (control.invalid){
+        if (control.invalid) {
           control.markAsTouched();
         }
       });
 
     } else {
-      let platforms: string[] = [];
-      for (let control of this.platformsControl.controls)
-        if (control.value != null) platforms.push(control.value);
+      const platforms: string[] = [];
 
-      let newGame = new Game(
+      for (const control of this.platformsControl.controls) {
+        if (control.value != null) {
+          platforms.push(control.value);
+        }
+      }
+
+      const newGame = new Game(
         this.editGameForm.get('name').value,
         this.editGameForm.get('developer').value,
         this.editGameForm.get('publisher').value,
@@ -108,7 +140,7 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
       errorMessage = this.gamesServ.editGame(newGame, this.gameToEdit.slug);
     }
 
-    if (errorMessage != null){
+    if (errorMessage != null) {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
     } else {
@@ -116,12 +148,12 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  resetSelects(){
+  public resetSelects() {
     this.editGameForm.get('selectPlatform').setValue(this.platforms[0]);
     this.editGameForm.get('category').setValue(this.genres[0]);
   }
 
-  startEditForm(){
+  public startEditForm() {
     this.resetSelects();
 
     this.editGameForm.patchValue({
@@ -132,37 +164,10 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
       category: this.gameToEdit.category,
     });
 
-    for (let plat of this.gameToEdit.platforms){
+    for (const plat of this.gameToEdit.platforms) {
       this.platformsSelected.push(plat);
       this.platformsControl.push(this.builder.control(plat));
     }
-  }
-
-  constructor(
-    private builder: FormBuilder,
-    private validation: FormValidationService,
-    private gamesServ: GamesService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
-
-  ngOnInit() {
-    this.gameToEditSub = this.route.params.subscribe(
-      (params: any) => {
-        let slug = params['slug'];
-        this.gameToEdit = this.gamesServ.getGameBySlug(slug);
-      }
-    );
-
-    if (this.gameToEdit == null){
-      this.router.navigate(['/collection']);
-    }
-
-    this.startEditForm();
-  }
-
-  ngOnDestroy() {
-    this.gameToEditSub.unsubscribe();
   }
 
 }

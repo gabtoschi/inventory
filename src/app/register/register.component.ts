@@ -13,34 +13,42 @@ import { AuthService } from './../shared/services/auth.service';
 export class RegisterComponent implements OnInit {
 
   // sync with form to obtain new user data
-  newUser: NewUserData = {
+  public newUser: NewUserData = {
     name: null,
     password: null,
     email: null
   };
 
   // to check validity of password
-  passwordConfirm: string;
+  public passwordConfirm: string;
 
   // to show alerts after submitting
-  showErrorAlert: boolean = false;
-  errorAlertMessage: string;
-  showSuccessAlert: boolean = false;
+  public showErrorAlert = false;
+  public errorAlertMessage: string;
+  public showSuccessAlert = false;
+
+  constructor(
+    private validation: FormValidationService,
+    private auth: AuthService
+  ) { }
+
+  ngOnInit() {
+  }
 
   // sends the data to the module to confirm the register
-  confirmRegister(form: NgForm){
+  confirmRegister(form: NgForm) {
     this.resetErrorAlert();
     this.resetSuccessAlert();
 
     let errorMessage = null;
 
-    if (!form.valid){
-      errorMessage = "There are errors below. Please check all fields."
+    if (!form.valid) {
+      errorMessage = 'There are errors below. Please check all fields.';
 
       Object.keys(form.controls).forEach(key => {
-        let control = form.controls[key];
+        const control = form.controls[key];
 
-        if (control.invalid){
+        if (control.invalid) {
           control.markAsTouched();
         }
       });
@@ -49,14 +57,14 @@ export class RegisterComponent implements OnInit {
       errorMessage = this.auth.registerUser(this.newUser);
     }
 
-    if (errorMessage != null){
+    if (errorMessage != null) {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
     } else {
       this.showSuccessAlert = true;
 
       Object.keys(form.controls).forEach(key => {
-        let control = form.controls[key];
+        const control = form.controls[key];
 
         control.markAsUntouched();
         control.reset();
@@ -69,32 +77,24 @@ export class RegisterComponent implements OnInit {
   }
 
   // resets after-submit alerts
-  resetErrorAlert(){
-    this.errorAlertMessage = "";
+  public resetErrorAlert() {
+    this.errorAlertMessage = '';
     this.showErrorAlert = false;
   }
 
-  resetSuccessAlert(){
+  public resetSuccessAlert() {
     this.showSuccessAlert = false;
   }
 
   // updates valid and invalid Bootstrap classes
-  updateValidationCSS(field: FormControl){
+  public updateValidationCSS(field: FormControl) {
     return this.validation.updateValidationCSS(field, false);
   }
 
   // clear password confirmation when a new password entered
-  clearPasswordConf(passwordConfField: NgModel){
+  public clearPasswordConf(passwordConfField: NgModel) {
     passwordConfField.control.markAsUntouched();
     this.passwordConfirm = null;
-  }
-
-  constructor(
-    private validation: FormValidationService,
-    private auth: AuthService
-  ) { }
-
-  ngOnInit() {
   }
 
 }

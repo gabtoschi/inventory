@@ -14,10 +14,10 @@ import { RemoveGameModalComponent } from '../remove-game-modal/remove-game-modal
 })
 export class GameDetailComponent implements OnInit, OnDestroy {
 
-  gameData: Game = null;
-  gameDataSub: Subscription;
+  public gameData: Game = null;
+  public gameDataSub: Subscription;
 
-  removeModal: BsModalRef;
+  public removeModal: BsModalRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +26,24 @@ export class GameDetailComponent implements OnInit, OnDestroy {
     private modalService: BsModalService
   ) { }
 
-  openRemoveModal(){
+  public ngOnInit() {
+    this.gameDataSub = this.route.params.subscribe(
+      (params: any) => {
+        const slug = params['slug'];
+        this.gameData = this.gamesServ.getGameBySlug(slug);
+      }
+    );
+
+    if (this.gameData == null) {
+      this.router.navigate(['/collection']);
+    }
+  }
+
+  public ngOnDestroy() {
+    this.gameDataSub.unsubscribe();
+  }
+
+  public openRemoveModal() {
     this.removeModal = this.modalService.show(RemoveGameModalComponent, {
       initialState: {
         gameName: this.gameData.name,
@@ -37,23 +54,6 @@ export class GameDetailComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
-
-  ngOnInit() {
-    this.gameDataSub = this.route.params.subscribe(
-      (params: any) => {
-        let slug = params['slug'];
-        this.gameData = this.gamesServ.getGameBySlug(slug);
-      }
-    );
-
-    if (this.gameData == null){
-      this.router.navigate(['/collection']);
-    }
-  }
-
-  ngOnDestroy() {
-    this.gameDataSub.unsubscribe();
   }
 
 }

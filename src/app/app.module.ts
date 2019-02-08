@@ -38,7 +38,7 @@ import { LoginComponent } from './login/login.component';
     FormValidationService
   ],
   exports: [
-    
+
   ],
   bootstrap: [AppComponent]
 })

@@ -6,23 +6,24 @@ import { FormControl, AbstractControl } from '@angular/forms';
 })
 export class FormValidationService {
 
+  constructor() { }
+
   // checks if a field is invalid after touching it
-  isFieldInvalid(field: FormControl | AbstractControl){
+  public isFieldInvalid(field: FormControl | AbstractControl) {
     return field.touched && field.invalid;
   }
 
   // checks if a field is invalid after touching it
-  isFieldValid(field: FormControl | AbstractControl){
+  public isFieldValid(field: FormControl | AbstractControl) {
     return field.touched && field.valid;
   }
 
   // updates valid and invalid Bootstrap classes
-  updateValidationCSS(field: FormControl | AbstractControl, onlyError: boolean){
+  public updateValidationCSS(field: FormControl | AbstractControl, onlyError: boolean) {
     return {
       'is-invalid': this.isFieldInvalid(field),
       'is-valid': onlyError ? false : this.isFieldValid(field)
-    }
+    };
   }
 
-  constructor() { }
 }

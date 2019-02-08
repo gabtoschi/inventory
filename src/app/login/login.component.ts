@@ -14,32 +14,41 @@ import { AuthService } from './../shared/services/auth.service';
 export class LoginComponent implements OnInit {
 
   // sync with form to obtain login data
-  loginData: LoginData = {
+  public loginData: LoginData = {
     email: null,
     password: null
-  }
+  };
 
   // to show alerts after submitting
-  showErrorAlert: boolean = false;
-  errorAlertMessage: string;
+  public showErrorAlert = false;
+  public errorAlertMessage: string;
+
+  constructor(
+    private validation: FormValidationService,
+    private auth: AuthService,
+    private router: Router
+  ) { }
+
+  public ngOnInit() {
+  }
 
   // resets after-submit alerts
-  resetErrorAlert(){
-    this.errorAlertMessage = "";
+  public resetErrorAlert() {
+    this.errorAlertMessage = '';
     this.showErrorAlert = false;
   }
 
   // sends the data to the module to confirm the login
-  submitLogin(form: NgForm){
+  submitLogin(form: NgForm) {
     let errorMessage = null;
 
-    if (!form.valid){
-      errorMessage = "There are errors below. Please check all fields."
+    if (!form.valid) {
+      errorMessage = 'There are errors below. Please check all fields.';
 
       Object.keys(form.controls).forEach(key => {
-        let control = form.controls[key];
+        const control = form.controls[key];
 
-        if (control.invalid){
+        if (control.invalid) {
           control.markAsTouched();
         }
       });
@@ -48,7 +57,7 @@ export class LoginComponent implements OnInit {
       errorMessage = this.auth.loginUser(this.loginData);
     }
 
-    if (errorMessage != null){
+    if (errorMessage != null) {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
     } else {
@@ -59,17 +68,8 @@ export class LoginComponent implements OnInit {
   }
 
   // updates valid and invalid Bootstrap classes
-  updateValidationCSS(field: FormControl){
+  public updateValidationCSS(field: FormControl) {
     return this.validation.updateValidationCSS(field, true);
-  }
-
-  constructor(
-    private validation: FormValidationService,
-    private auth: AuthService,
-    private router: Router
-  ) { }
-
-  ngOnInit() {
   }
 
 }

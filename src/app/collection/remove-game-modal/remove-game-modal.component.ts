@@ -9,8 +9,8 @@ import { EventEmitter } from 'events';
 })
 export class RemoveGameModalComponent implements OnInit {
 
-  gameName: string;
-  onConfirm: () => void = () => {};
+  public gameName: string;
+  public onConfirm: () => void = () => {};
 
   constructor(
     public modalRef: BsModalRef

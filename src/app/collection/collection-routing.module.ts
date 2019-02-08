@@ -7,13 +7,12 @@ import { GameDetailComponent } from './game-detail/game-detail.component';
 import { NewGameFormComponent } from './new-game-form/new-game-form.component';
 import { EditGameFormComponent } from './edit-game-form/edit-game-form.component';
 
-const collectionRoutes : Routes = [
+const collectionRoutes: Routes = [
   {path: '', component: CollectionComponent, children: [
     {path: 'new', component: NewGameFormComponent},
     {path: ':slug/view', component: GameDetailComponent},
-    {path: ':slug/edit', component: EditGameFormComponent}    
-  ]},
-  
+    {path: ':slug/edit', component: EditGameFormComponent}
+  ]}
 ];
 
 @NgModule({

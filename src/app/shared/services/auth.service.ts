@@ -9,65 +9,66 @@ import { LoginData } from './../models/login-data';
 })
 export class AuthService {
 
+  // reference for auth guard
+  static isLoggedIn = true;
+
   // placeholder for tests
-  _registeredUsers: NewUserData[] = [
+  public _registeredUsers: NewUserData[] = [
     {name: 'PH', email: 'a@a', password: '12'}
   ];
-  _currentUser: NewUserData = null;
-  
-  // reference for auth guard
-  static isLoggedIn: boolean = true;
+  public _currentUser: NewUserData = null;
+
+  constructor() { }
 
   // confirm a user registration
-  registerUser(newUser: NewUserData): null | string {
+  public registerUser(newUser: NewUserData): null | string {
     // placeholder for tests
 
-    let alreadyExists: boolean = false;
+    let alreadyExists = false;
 
-    this._registeredUsers.forEach((user) => {
-      if (user.email === newUser.email){
+    this._registeredUsers.forEach((userIt: NewUserData) => {
+      if (userIt.email === newUser.email) {
         alreadyExists = true;
       }
     });
 
-    if (alreadyExists) return ("Already exists a registered user with this e-mail.");
+    if (alreadyExists) {
+      return ('Already exists a registered user with this e-mail.');
+    }
 
-    let user = new NewUserData();
+    const user = new NewUserData();
     user.email = newUser.email;
     user.name = newUser.name;
     user.password = newUser.password;
 
     this._registeredUsers.push(user);
 
-    console.log("REGISTERED");
-    console.log(this._registeredUsers);
     return null;
   }
 
   // confirm a user login
-  loginUser(login: LoginData): null | string {
+  public loginUser(login: LoginData): null | string {
     // placeholder for tests
 
-    let userRegistered: boolean = false;
+    let userRegistered = false;
 
     this._registeredUsers.forEach((user) => {
-      if (user.email === login.email && user.password === login.password){
+      if (user.email === login.email && user.password === login.password) {
         userRegistered = true;
         this._currentUser = user;
       }
     });
 
     AuthService.isLoggedIn = userRegistered;
-    return userRegistered ? null : "E-mail or password wrong.";
+    return userRegistered ? null : 'E-mail or password wrong.';
   }
 
   // make a user logout
-  logoutUser(): boolean {
-    if (AuthService.isLoggedIn){
+  public logoutUser(): boolean {
+    if (AuthService.isLoggedIn) {
       AuthService.isLoggedIn = false;
       return true;
     } return false;
   }
 
-  constructor() { }
 }

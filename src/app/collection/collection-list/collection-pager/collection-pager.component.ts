@@ -7,65 +7,69 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class CollectionPagerComponent implements OnInit {
 
-  currentPage: number = 1;
-  pages: number[];
+  public currentPage = 1;
+  public pages: number[];
 
-  @Input() maxPages;
-  @Input() perPage;
-  @Input() listLength;
+  @Input() public maxPages: number;
+  @Input() public perPage: number;
+  @Input() public listLength: number;
   @Output() pageChanged = new EventEmitter<number>();
 
-  getTotalPages(){
+  constructor() { }
+
+  public ngOnInit() {
+    this.generatePages();
+  }
+
+  private getTotalPages() {
     return Math.ceil(this.listLength / this.perPage);
   }
 
-  pageClicked(page: number){
+  private pageClicked(page: number) {
     this.currentPage = page;
     this.pageChanged.emit(this.currentPage);
     this.generatePages();
   }
 
-  nextPage(){
-    if (this.currentPage < this.getTotalPages())
+  private nextPage() {
+    if (this.currentPage < this.getTotalPages()) {
       this.pageClicked(this.currentPage + 1);
+    }
   }
 
-  previousPage(){
-    if (this.currentPage > 1)
+  private previousPage() {
+    if (this.currentPage > 1) {
       this.pageClicked(this.currentPage - 1);
+    }
   }
 
-  generatePages(){
-    let pageArray: number[] = [];
-    let totalPages: number = this.getTotalPages();
-    let offset: number = Math.ceil((this.maxPages - 1) / 2);
+  private generatePages() {
+    const pageArray: number[] = [];
+    const totalPages: number = this.getTotalPages();
+    const offset: number = Math.ceil((this.maxPages - 1) / 2);
 
     let firstPageShown: number;
     let pageQuantity: number;
 
-    if (totalPages < this.maxPages){ // pagination not full
+    if (totalPages < this.maxPages) { // pagination not full
       firstPageShown = 1;
       pageQuantity = totalPages;
     } else {
       pageQuantity = this.maxPages;
 
-      if (this.currentPage <= offset) // first pages
+      if (this.currentPage <= offset) { // first pages
         firstPageShown = 1;
-      else if (this.currentPage > (totalPages - offset)) // last pages
-        firstPageShown = totalPages - this.maxPages + 1; // default scenario
-      else firstPageShown = this.currentPage - offset;
+      } else if (this.currentPage > (totalPages - offset)) { // last pages
+        firstPageShown = totalPages - this.maxPages + 1;
+      } else {
+        firstPageShown = this.currentPage - offset; // default scenario
+      }
     }
 
-    for (let i = firstPageShown; i < (firstPageShown + pageQuantity); i++)
+    for (let i = firstPageShown; i < (firstPageShown + pageQuantity); i++) {
       pageArray.push(i);
+    }
 
-    this.pages = pageArray;    
+    this.pages = pageArray;
   }
-
-  constructor() { }
-
-  ngOnInit() {
-    this.generatePages();
-  }
-
 }

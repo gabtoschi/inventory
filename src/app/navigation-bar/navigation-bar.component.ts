@@ -10,22 +10,22 @@ import { AuthService } from './../shared/services/auth.service';
 })
 export class NavigationBarComponent implements OnInit {
 
-  isLoggedIn(){
-    return AuthService.isLoggedIn;
-  }
-
-  logout(){
-    if (this.authService.logoutUser()){
-      this.router.navigate(['/']);
-    }
-  }
-
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
+  }
+
+  public isLoggedIn() {
+    return AuthService.isLoggedIn;
+  }
+
+  public logout() {
+    if (this.authService.logoutUser()) {
+      this.router.navigate(['/']);
+    }
   }
 
 }
