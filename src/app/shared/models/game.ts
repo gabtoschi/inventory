@@ -15,13 +15,12 @@ export class Game {
         this.slug = this.generateSlug(name);
     }
 
-    generateSlug(str: string): string {
-        str = str.replace(/^\s+|\s+$/g, ''); // trim
+    private generateSlug(str: string): string {
+        str = str.replace(/^\s+|\s+$/g, '');
         str = str.toLowerCase();
 
-        // remove accents, swap ñ for n
         str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        str = str.replace(/\.|\/|_|,|:|;/g, '-');
+        str = str.replace(/\.|\/|_|,|:|;| /g, '-');
 
         return str;
     }

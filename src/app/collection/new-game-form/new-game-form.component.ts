@@ -14,7 +14,9 @@ import { Game } from 'src/app/shared/models/game';
 export class NewGameFormComponent implements OnInit {
 
   public genres: string[];
+
   public platforms: string[];
+  public allPlatforms: string[];
 
   public platformsSelected: string[] = [];
 
@@ -53,7 +55,7 @@ export class NewGameFormComponent implements OnInit {
 
     this.metadataServ.getMetadata(GameMetadataType.Platforms).subscribe(
       (platforms => {
-        this.platforms = platforms.sort();
+        this.allPlatforms = platforms.sort();
         this.resetPlatformSelect();
       })
     );
@@ -65,11 +67,16 @@ export class NewGameFormComponent implements OnInit {
     if (!this.platformsSelected.includes(newPlatform)) {
       this.platformsSelected.push(newPlatform);
       this.platformsControl.push(this.builder.control(newPlatform));
+
+      this.platforms.splice(this.platforms.indexOf(newPlatform), 1);
     }
   }
 
   public deselectPlatform(platform: string) {
     this.platformsSelected.splice(this.platformsSelected.indexOf(platform), 1);
+
+    this.platforms.push(platform);
+    this.platforms.sort();
 
     for (const control of this.platformsControl.controls) {
       if (control.value === platform) {
@@ -149,6 +156,8 @@ export class NewGameFormComponent implements OnInit {
   }
 
   private resetPlatformSelect() {
+    this.platforms = this.allPlatforms.map(x => x);
+
     this.newGameForm.get('selectPlatform').setValue(this.platforms[0]);
     this.platformsSelected = [];
 

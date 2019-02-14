@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CommaListPipe } from './../shared/pipes/comma-list.pipe';
+import { ArrayDifferencePipe } from './../shared/pipes/array-difference.pipe';
 
 import { AlertModule, ModalModule, ButtonsModule, PaginationModule } from 'ngx-bootstrap';
 
@@ -22,6 +23,7 @@ import { CollectionPagerComponent } from './collection-list/collection-pager/col
     CollectionListComponent,
     GameDetailComponent,
     CommaListPipe,
+    ArrayDifferencePipe,
     NewGameFormComponent,
     EditGameFormComponent,
     RemoveGameModalComponent,

@@ -97,7 +97,7 @@ export class GamesService {
   }
 
   public removeGame(slugToRemove: string) {
-    slugToRemove = 'aaaadgjadga';
+
     this.http.delete(`${this.apiUrl}/${slugToRemove}`)
       .pipe(
         catchError(error => {
