@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { GamesService } from './../games.service';
 import { Game } from './../../shared/models/game';
@@ -10,7 +10,7 @@ import { Game } from './../../shared/models/game';
 })
 export class CollectionListComponent implements OnInit {
 
-  gameList: Game[] = null;
+  @Input() public gameList: Game[];
 
   public maxPages = 5;
   public perPage = 6;
@@ -23,8 +23,7 @@ export class CollectionListComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.gamesServ.sortGames();
-    this.gameList = this.gamesServ.getGameList();
+
   }
 
   private pageChanged(value: number) {

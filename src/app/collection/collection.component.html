@@ -23,8 +23,8 @@
 
 <br>
 <div class="row">
-  <div class="col-6">
-    <app-collection-list></app-collection-list>
+  <div class="col-6" *ngIf="isListReady">
+    <app-collection-list [gameList]="gameList"></app-collection-list>
   </div>
   <div class="col-6">
     <router-outlet></router-outlet>

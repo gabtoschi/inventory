@@ -19,6 +19,8 @@ export class GameDetailComponent implements OnInit, OnDestroy {
 
   public removeModal: BsModalRef;
 
+  public isDataReady = false;
+
   constructor(
     private route: ActivatedRoute,
     private gamesServ: GamesService,
@@ -27,16 +29,16 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit() {
-    this.gameDataSub = this.route.params.subscribe(
-      (params: any) => {
-        const slug = params['slug'];
-        this.gameData = this.gamesServ.getGameBySlug(slug);
+    this.gameDataSub = this.route.data.subscribe(
+      (data: {gamedata: Game}) => {
+        if (data.gamedata == null) {
+          this.router.navigate(['/collection']);
+        } else {
+          this.gameData = data.gamedata;
+          this.isDataReady = true;
+        }
       }
     );
-
-    if (this.gameData == null) {
-      this.router.navigate(['/collection']);
-    }
   }
 
   public ngOnDestroy() {

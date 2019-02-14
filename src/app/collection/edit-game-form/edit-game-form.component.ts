@@ -6,8 +6,7 @@ import { Subscription } from 'rxjs';
 import { GamesService } from './../games.service';
 import { FormValidationService } from './../../shared/services/form-validation.service';
 import { Game } from 'src/app/shared/models/game';
-import { GamePlatforms } from './../../shared/models/game-platforms';
-import { GameGenres } from './../../shared/models/game-genres';
+import { GameMetadataService, GameMetadataType } from './../../shared/services/game-metadata.service';
 
 @Component({
   selector: 'app-edit-game-form',
@@ -19,10 +18,12 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
   private gameToEdit: Game;
   private gameToEditSub: Subscription;
 
-  public genres: string[] = GameGenres.sort();
-  public platforms: string[] = GamePlatforms.sort();
+  public genres: string[];
+  public platforms: string[];
 
   public platformsSelected: string[] = [];
+
+  public isDataReady = false;
 
   // to show alerts after submitting
   public showErrorAlert = false;
@@ -51,22 +52,36 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
     private validation: FormValidationService,
     private gamesServ: GamesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private metadataServ: GameMetadataService
   ) { }
 
   public ngOnInit() {
-    this.gameToEditSub = this.route.params.subscribe(
-      (params: any) => {
-        const slug = params['slug'];
-        this.gameToEdit = this.gamesServ.getGameBySlug(slug);
-      }
+    this.metadataServ.getMetadata(GameMetadataType.Genres).subscribe(
+      (genres => {
+        this.genres = genres.sort();
+        this.editGameForm.get('category').setValue(this.genres[0]);
+      })
     );
 
-    if (this.gameToEdit == null) {
-      this.router.navigate(['/collection']);
-    }
+    this.metadataServ.getMetadata(GameMetadataType.Platforms).subscribe(
+      (platforms => {
+        this.platforms = platforms.sort();
+        this.editGameForm.get('selectPlatform').setValue(this.platforms[0]);
+      })
+    );
 
-    this.startEditForm();
+    this.gameToEditSub = this.route.data.subscribe(
+      (data: {gamedata: Game}) => {
+        if (data.gamedata == null) {
+          this.router.navigate(['/collection']);
+        } else {
+          this.gameToEdit = data.gamedata;
+          this.isDataReady = true;
+          this.startEditForm();
+        }
+      }
+    );
   }
 
   public ngOnDestroy() {
@@ -148,14 +163,7 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  public resetSelects() {
-    this.editGameForm.get('selectPlatform').setValue(this.platforms[0]);
-    this.editGameForm.get('category').setValue(this.genres[0]);
-  }
-
   public startEditForm() {
-    this.resetSelects();
-
     this.editGameForm.patchValue({
       slug: this.gameToEdit.slug,
       name: this.gameToEdit.name,

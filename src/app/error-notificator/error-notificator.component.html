@@ -1,0 +1,7 @@
+<div>
+  <div *ngFor="let error of errors; let i = index" class="inventory-toast">
+    <alert dismissible="true" type="danger" (onClosed)="dismissError(i)">
+      {{ error }}
+    </alert>
+  </div>
+</div>

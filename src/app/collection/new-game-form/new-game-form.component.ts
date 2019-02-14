@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 
-import { GameGenres } from './../../shared/models/game-genres';
-import { GamePlatforms } from './../../shared/models/game-platforms';
 import { FormValidationService } from './../../shared/services/form-validation.service';
+import { GameMetadataService, GameMetadataType } from './../../shared/services/game-metadata.service';
 import { GamesService } from './../games.service';
 import { Game } from 'src/app/shared/models/game';
 
@@ -14,8 +13,8 @@ import { Game } from 'src/app/shared/models/game';
 })
 export class NewGameFormComponent implements OnInit {
 
-  public genres: string[] = GameGenres.sort();
-  public platforms: string[] = GamePlatforms.sort();
+  public genres: string[];
+  public platforms: string[];
 
   public platformsSelected: string[] = [];
 
@@ -40,11 +39,24 @@ export class NewGameFormComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private validation: FormValidationService,
-    private gamesServ: GamesService
+    private gamesServ: GamesService,
+    private metadataServ: GameMetadataService
   ) { }
 
   public ngOnInit() {
-    this.resetSelects();
+    this.metadataServ.getMetadata(GameMetadataType.Genres).subscribe(
+      (genres => {
+        this.genres = genres.sort();
+        this.resetGenreSelect();
+      })
+    );
+
+    this.metadataServ.getMetadata(GameMetadataType.Platforms).subscribe(
+      (platforms => {
+        this.platforms = platforms.sort();
+        this.resetPlatformSelect();
+      })
+    );
   }
 
   public selectPlatform() {
@@ -136,14 +148,22 @@ export class NewGameFormComponent implements OnInit {
     }
   }
 
-  resetSelects() {
+  private resetPlatformSelect() {
     this.newGameForm.get('selectPlatform').setValue(this.platforms[0]);
-    this.newGameForm.get('category').setValue(this.genres[0]);
     this.platformsSelected = [];
 
     for (let i = 0; i < this.platformsControl.controls.length; i++) {
       this.platformsControl.removeAt(i);
     }
+  }
+
+  private resetGenreSelect() {
+    this.newGameForm.get('category').setValue(this.genres[0]);
+  }
+
+  private resetSelects() {
+    this.resetPlatformSelect();
+    this.resetGenreSelect();
   }
 
 }
