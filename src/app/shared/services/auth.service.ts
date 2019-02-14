@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 
 import { NewUserData } from '../models/new-user-data';
 import { LoginData } from './../models/login-data';
+import { ErrorsService } from 'src/app/error-notificator/errors.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private apiUrl = 'http://localhost:3000/user';
   // reference for auth guard
-  static isLoggedIn = true;
+  static isLoggedIn = false;
 
   // placeholder for tests
   public _registeredUsers: NewUserData[] = [
-    {name: 'PH', email: 'a@a', password: '12'}
+    {name: 'root', email: 'root@root', password: 'root'}
   ];
   public _currentUser: NewUserData = null;
 
