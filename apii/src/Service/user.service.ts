@@ -1,25 +1,23 @@
 import { Injectable } from '@nestjs/common';
-
 import { User } from '../interfaces/user.interface';
 
 @Injectable()
 export class UserService {
+
     private readonly user: User[] = [];
 
+    static isLoggedIn = false;
+
     constructor() {
-        this.create(new User('nome1', 'email', 'senha'));
-        this.create(new User('nome2', 'email', 'senha'));
-        this.create(new User('nome3', 'email', 'senha'));
+        this.registerUser(new User('nome1', 'email', 'senha'));
+        this.registerUser(new User('nome2', 'email', 'senha'));
+        this.registerUser(new User('nome3', 'email', 'senha'));
     }
 
     public getAll(): User[] {
         return this.user;
     }
 
-
-    public create(newUser: User) {
-        this.user.push(newUser);
-    }
 
     public getByEmail(email: string): User {
         for (const usuario of this.user) {
@@ -30,28 +28,44 @@ export class UserService {
         return null;
     }
 
-    // public removeBySlug(slug: string): boolean {
-    //     for (const game of this.games) {
-    //         if (game.slug === slug) {
-    //             this.games.splice(this.games.indexOf(game), 1);
-    //             return true;
-    //         }
-    //     }
+    public registerUser(newUser: User): null | string {
 
-    //     return false;
-    // }
-
-    // public editBySlug(slug: string, newInfo: Game): boolean {
-    //     // correcting the slug
-    //     newInfo.slug = slug;
-
-    //     if (!this.removeBySlug(slug)) {
-    //         return false;
-    //     }
-
-    //     this.create(newInfo);
-
-    //     return true;
-    // }
+        for (let userIt of this.user){
+            if (userIt.email === newUser.email) {
+                return ('Already exists a registered user with this e-mail.');
+            }
+        }
+    
+        let usuario = new User(newUser.name, newUser.email,newUser.password);
+        this.user.push(usuario);
+    
+        return null;
+    }
+    
+      // confirm a user login
+    public loginUser(login: User): null | string {
+    
+        let userRegistered = false;
+    
+        this.user.forEach((user) => {
+          if (user.email === login.email && user.password === login.password) {
+            userRegistered = true;
+            // esperando jwt 
+          }
+        });
+    
+        UserService.isLoggedIn = userRegistered;
+        return userRegistered ? null : 'E-mail or password wrong.';
+        
+    }
+    
+      // make a user logout
+    public logoutUser(): boolean {
+        if (UserService.isLoggedIn) {
+            UserService.isLoggedIn = false;
+          return true;
+        } return false;
+    }
+    
 
 }
