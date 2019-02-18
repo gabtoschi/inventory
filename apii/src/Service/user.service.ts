@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../interfaces/user.interface';
+import { JwtPayload } from 'src/dtos/jwt-payload.dto';
 
 @Injectable()
 export class UserService {
@@ -66,6 +67,15 @@ export class UserService {
           return true;
         } return false;
     }
-    
+
+    public validateEmail(validateUser: User): null | boolean {
+
+        for (let userIt of this.user){
+            if (userIt.email === validateUser.email) {
+                return true;
+            }
+        }
+        return null;
+    }
 
 }
