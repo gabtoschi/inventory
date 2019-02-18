@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AlertModule, ButtonsModule } from 'ngx-bootstrap';
 
@@ -11,6 +11,8 @@ import { FormValidationService } from './shared/services/form-validation.service
 import { ErrorsService } from './error-notificator/errors.service';
 
 import { AppRoutingModule } from './app-routing.module';
+
+import { JwtInterceptor } from './shared/guards/jwt.interceptor';
 
 import { AppComponent } from './app.component';
 import { SplashComponent } from './splash/splash.component';
@@ -41,7 +43,12 @@ import { ErrorNotificatorComponent } from './error-notificator/error-notificator
   ],
   providers: [
     FormValidationService,
-    ErrorsService
+    ErrorsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
   ],
   exports: [
 
