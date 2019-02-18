@@ -18,6 +18,7 @@ export class GameDataResolveGuard implements Resolve<Game> {
     state: RouterStateSnapshot): Observable<Game> | Promise<Game> | Game {
 
     const slug = next.params['slug'];
+    console.log('get info about ' + slug);
     return this.gamesService.getGameBySlug(slug);
   }
 }

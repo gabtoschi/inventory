@@ -4,7 +4,7 @@
 
 <ul class="list-group">
   <div *ngFor="let game of gameList; let i = index">
-    <a class="list-group-item list-group-item-action" *ngIf="(i+1 >= firstIndex) && (i+1 <= lastIndex)"
+    <a class="list-group-item list-group-item-action" *ngIf="(i >= firstIndex) && (i <= lastIndex)"
       [routerLink]="['/collection', game.slug, 'view']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
       <b>{{ game.name }} </b> <i class="fas fa-chevron-circle-right"></i>
       <br>

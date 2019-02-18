@@ -13,10 +13,10 @@ export class CollectionListComponent implements OnInit {
   @Input() public gameList: Game[];
 
   public maxPages = 5;
-  public perPage = 6;
+  public perPage = 4;
 
-  public firstIndex = 1;
-  public lastIndex = this.perPage;
+  public firstIndex = 0;
+  public lastIndex = this.perPage - 1;
 
   constructor(
     private gamesServ: GamesService

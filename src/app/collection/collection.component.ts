@@ -28,7 +28,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
         this.gameList = data.gamelist;
         this.gamesService.games = data.gamelist;
         this.isListReady = true;
-        console.log(data.gamelist);
+        console.log(this.gameList);
       }
     );
   }

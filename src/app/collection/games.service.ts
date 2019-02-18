@@ -29,6 +29,19 @@ export class GamesService {
     return this.http.get<Game>(`${this.apiUrl}/${slug}`);
   }
 
+  public getGameLocally(slug: string) {
+    console.log(slug);
+
+    for (const game of this.games) {
+      if (slug === game.slug) {
+        console.log('yep');
+        return game;
+      }
+    }
+
+    return null;
+  }
+
   public addNewGame(newGame: Game): string | null {
     this.generateNewSlug(newGame);
 
@@ -50,7 +63,7 @@ export class GamesService {
 
   private addLocally(newGame: Game) {
     this.games.push(newGame);
-    this.sortGames();
+    this.sortGames(this.games);
   }
 
   private generateNewSlug(newGame: Game) {
@@ -90,7 +103,7 @@ export class GamesService {
     for (const game of this.games) {
       if (originalSlug === game.slug) {
         this.games.splice(this.games.indexOf(game), 1, newData);
-        this.sortGames();
+        this.sortGames(this.games);
         break;
       }
     }
@@ -116,14 +129,14 @@ export class GamesService {
     for (const game of this.games) {
       if (slugToRemove === game.slug) {
         this.games.splice(this.games.indexOf(game), 1);
-        this.sortGames();
+        this.sortGames(this.games);
         break;
       }
     }
   }
 
-  public sortGames() {
-    this.games.sort((a, b) => {
+  public sortGames(games: Game[]) {
+    games.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
   }

@@ -23,12 +23,14 @@
 
 <br>
 <div class="row">
-  <div class="col-6" *ngIf="isListReady">
-    <app-collection-list [gameList]="gameList"></app-collection-list>
-  </div>
-  <div class="col-6">
+  <div class="col-md-6 order-md-last">
     <router-outlet></router-outlet>
   </div>
+  <div class="col-md-6" *ngIf="isListReady">
+    <br class="d-block d-md-none">
+    <app-collection-list [gameList]="gameList"></app-collection-list>
+  </div>
+  
 </div>
 
 </div>

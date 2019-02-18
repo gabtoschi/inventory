@@ -60,7 +60,6 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
     this.metadataServ.getMetadata(GameMetadataType.Genres).subscribe(
       (genres => {
         this.genres = genres.sort();
-        this.editGameForm.get('category').setValue(this.genres[0]);
       })
     );
 
@@ -159,7 +158,7 @@ export class EditGameFormComponent implements OnInit, OnDestroy {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
     } else {
-      this.router.navigate(['/collection', this.gameToEdit.slug, 'view']);
+      this.router.navigate(['/collection']);
     }
   }
 

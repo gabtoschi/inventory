@@ -42,6 +42,7 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
+    console.log('destroyed?');
     this.gameDataSub.unsubscribe();
   }
 
