@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
       });
 
     } else {
-      errorMessage = this.auth.registerUser(this.newUser);
+      errorMessage = this.auth.register(this.newUser);
     }
 
     if (errorMessage != null) {

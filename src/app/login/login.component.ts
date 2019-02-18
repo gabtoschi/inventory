@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
       });
 
     } else {
-      errorMessage = this.auth.loginUser(this.loginData);
+      errorMessage = this.auth.login(this.loginData);
     }
 
     if (errorMessage != null) {
