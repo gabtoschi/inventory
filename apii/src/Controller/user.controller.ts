@@ -13,13 +13,12 @@ export class UserController {
 
 
     @Get()
-    public async getGame(@Param() dto: CreateUserDto){
+    public async getGame(@Body() dto: CreateUserDto){
         return this.service.loginUser(new User(dto.name, dto.email, dto.password));
     }
 
     @Post()
     public async create(@Body() dto: CreateUserDto) {
-        //localStorage.setItem('token', res.token)
         return this.service.registerUser(new User(dto.name, dto.email, dto.password));
     }
 
