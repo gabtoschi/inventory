@@ -19,11 +19,11 @@ export class NavigationBarComponent implements OnInit {
   }
 
   public isLoggedIn() {
-    return AuthService.isLoggedIn;
+    return this.authService.isLoggedIn();
   }
 
   public logout() {
-    if (this.authService.logoutUser()) {
+    if (this.authService.logout()) {
       this.router.navigate(['/']);
     }
   }

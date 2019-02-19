@@ -54,9 +54,19 @@ export class RegisterComponent implements OnInit {
       });
 
     } else {
-      errorMessage = this.auth.register(this.newUser);
+      errorMessage = this.auth.register(this.newUser)
+        .subscribe(
+          (registerData) => {
+            this.finishRegister(form, null);
+          },
+          (error) => {
+            this.finishRegister(form, 'Something wrong happened. Try again.');
+          }
+        );
     }
+  }
 
+  private finishRegister(form, errorMessage) {
     if (errorMessage != null) {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
@@ -70,10 +80,6 @@ export class RegisterComponent implements OnInit {
         control.reset();
       });
     }
-
-    console.log(form);
-    console.log(this.newUser);
-    console.log(this.passwordConfirm);
   }
 
   // resets after-submit alerts

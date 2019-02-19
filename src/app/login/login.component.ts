@@ -54,17 +54,27 @@ export class LoginComponent implements OnInit {
       });
 
     } else {
-      errorMessage = this.auth.login(this.loginData);
+      this.auth.login(this.loginData).subscribe(
+        (loginData) => {
+          this.auth.createSession(loginData);
+          this.finishLogin(null);
+        },
+        (error) => {
+          this.finishLogin('Something wrong happened. Try again.');
+        }
+      );
     }
 
+  }
+
+
+  private finishLogin(errorMessage) {
     if (errorMessage != null) {
       this.errorAlertMessage = errorMessage;
       this.showErrorAlert = true;
     } else {
       this.router.navigate(['/collection']);
     }
-
-    console.log(this.loginData);
   }
 
   // updates valid and invalid Bootstrap classes

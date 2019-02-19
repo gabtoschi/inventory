@@ -13,8 +13,7 @@ import { LoginData } from './../models/login-data';
 })
 export class AuthService {
 
-  // reference for auth guard
-  static isLoggedIn = true;
+  private apiUrl = 'http://localhost:3000/user';
 
   // local storage keys
   jwtStorageKey = 'inventory-token';
@@ -32,22 +31,10 @@ export class AuthService {
   ) { }
 
   public login(loginData: LoginData) {
-    this.http.post<LoginData>('/api/login', loginData)
-      .pipe(
-        catchError(error => {
-          this.errors.createErrorMessage('E-mail or password wrong.');
-          return 'E-mail or password wrong.';
-        })
-      )
-      .subscribe(
-        (authData) => {
-          this.createSession(authData);
-          return null;
-        }
-      );
+    return this.http.post(this.apiUrl, loginData);
   }
 
-  private createSession(authData) {
+  public createSession(authData) {
     const expiresAt = moment().add(authData.expiresIn, 'second');
 
     localStorage.setItem(this.jwtStorageKey, authData.token);
@@ -57,9 +44,11 @@ export class AuthService {
   public logout() {
     localStorage.removeItem(this.jwtStorageKey);
     localStorage.removeItem(this.expiresStorageKey);
+    return true;
   }
 
   public isLoggedIn(): boolean {
+    // return true;
     return moment().isBefore(this.getExpirationTimestamp());
   }
 
@@ -72,18 +61,7 @@ export class AuthService {
   }
 
   public register(newUser: NewUserData) {
-    this.http.post<NewUserData>('/api/register', newUser)
-      .pipe(
-        catchError(error => {
-          this.errors.createErrorMessage('Something wrong happened. Try again.');
-          return 'Something wrong happened. Try again.';
-        })
-      )
-      .subscribe(
-        (registerData) => {
-          return null;
-        }
-      );
+    return this.http.post(this.apiUrl, newUser);
   }
 
 /*
