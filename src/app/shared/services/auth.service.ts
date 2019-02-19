@@ -21,10 +21,10 @@ export class AuthService {
   expiresStorageKey = 'inventory-expires';
 
   // placeholder for tests
-  public _registeredUsers: NewUserData[] = [
+  /*public _registeredUsers: NewUserData[] = [
     {name: 'PH', email: 'a@a', password: '12'}
   ];
-  public _currentUser: NewUserData = null;
+  public _currentUser: NewUserData = null;*/
 
   constructor(
     private http: HttpClient,
@@ -86,7 +86,7 @@ export class AuthService {
       );
   }
 
-
+/*
    // confirm a user registration
   public registerUser(newUser: NewUserData): null | string {
     // placeholder for tests
@@ -137,5 +137,5 @@ export class AuthService {
       return true;
     } return false;
   }
-
+*/
 }
