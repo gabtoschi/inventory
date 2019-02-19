@@ -12,15 +12,15 @@ export class UserController {
     ) {}
 
 
-    @Get()
+    @Post()
     public async getGame(@Body() dto: CreateUserDto){
         return this.service.loginUser(new User(dto.name, dto.email, dto.password));
     }
 
-    @Post()
-    public async create(@Body() dto: CreateUserDto) {
-        return this.service.registerUser(new User(dto.name, dto.email, dto.password));
-    }
+    // @Post()
+    // public async create(@Body() dto: CreateUserDto) {
+    //     return this.service.registerUser(new User(dto.name, dto.email, dto.password));
+    // }
 
     
     
