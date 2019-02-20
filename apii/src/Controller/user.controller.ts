@@ -13,8 +13,9 @@ export class UserController {
 
 
     @Post()
-    public async getGame(@Body() dto: CreateUserDto){
-        return this.service.loginUser(new User(dto.name, dto.email, dto.password));
+    public async getuser(@Body() name: string, email: string, password: string){
+        this.service.loginUser(name, email, password);
+        return ;
     }
 
     // @Post()

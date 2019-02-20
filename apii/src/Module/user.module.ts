@@ -7,4 +7,4 @@ import { UserController } from '../Controller/user.controller';
     controllers: [UserController],
     providers: [UserService],
 })
-export class GamesModule {}
+export class Usermodule {}
