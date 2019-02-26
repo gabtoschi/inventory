@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../interfaces/user.interface';
-//import { JwtPayload } from 'src/dtos/jwt-payload.dto';
-//import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from 'src/dtos/jwt-payload.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
@@ -10,7 +10,8 @@ export class UserService {
 
     static isLoggedIn = false;
 
-    constructor(//private readonly jwtService: JwtService
+    constructor(
+        private readonly jwtService: JwtService
         ) 
     {
         this.registerUser(new User('nome1', 'email', 'senha'));
@@ -47,7 +48,7 @@ export class UserService {
     }
     
       // confirm a user login
-    public loginUser(name: string, email: string, password: string): null | string {
+    public loginUser(name: string, email: string, password: string): any {
     
         let userRegistered = false;
     
@@ -55,20 +56,18 @@ export class UserService {
           if (user.email === email && user.password === password) {
             userRegistered = true;
 
-            // const payload: JwtPayload = {
-            //     email: user.email
-            //   };
+            
 
-            // return { user, token: this.jwtService.sign(payload) };
+            return { user, token: this.jwtService.sign(payload) };
           }
         });
     
         UserService.isLoggedIn = userRegistered;
 
-        if(userRegistered == false){
+        if(UserService.isLoggedIn == false){
             return 'E-mail or password wrong.';
         }else{
-            return 'E-mail or password aproved.';
+            return {token: this.jwtService.sign(payload), "36000" };
         }
         
     }
